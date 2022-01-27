@@ -4,9 +4,9 @@
 
 Convert [DWD-KOSTRA](https://www.dwd.de/DE/leistungen/kostra_dwd_rasterwerte/kostra_dwd_rasterwerte.html) data to `xarray` (including download).
 
-The original DWD-KOSTRA dataset contains of a number of csv tables and additional grid definitions in excel tables.
-This repository contains the python module `pykostra` which let's you easily convert thos csv tables of the DWD-KOSTRA dataset to xarray.
-It supposed to create an analysis ready dataset for easy exploration of the KOSTRA dataset. 
+The original DWD-KOSTRA dataset consists of a number of csv tables and additional grid definitions in excel tables.
+This repository contains the python module `pykostra` which let's you easily convert those csv tables of the DWD-KOSTRA dataset to xarray.
+It is supposed to create an analysis ready dataset for easy exploration of the KOSTRA dataset. 
 For further scientific information, please consult the official documentation.
 
 To see how it works, just click the binder button!
