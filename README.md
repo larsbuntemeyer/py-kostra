@@ -1,5 +1,7 @@
 # py-kostra
 
+[![DOI](https://zenodo.org/badge/452822875.svg)](https://zenodo.org/badge/latestdoi/452822875)
+
 Convert [DWD-KOSTRA](https://www.dwd.de/DE/leistungen/kostra_dwd_rasterwerte/kostra_dwd_rasterwerte.html) data to `xarray` (including download).
 
 The original DWD-KOSTRA dataset contains of a number of csv tables and additional grid definitions in excel tables.
