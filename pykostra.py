@@ -7,6 +7,9 @@ import pandas as pd
 import xarray as xr
     
 
+__version__ = "0.1.0"
+
+    
 duration_name = 'duration'
 interval_name = 'interval'
 
