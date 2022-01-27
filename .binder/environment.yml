@@ -7,3 +7,4 @@ dependencies:
   - pandas
   - openpyxl
   - bs4
+  - matplotlib
