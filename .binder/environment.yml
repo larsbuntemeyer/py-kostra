@@ -4,4 +4,6 @@ channels:
   - nodefaults
 dependencies:
   - xarray
+  - pandas
+  - openpyxl
   - bs4
