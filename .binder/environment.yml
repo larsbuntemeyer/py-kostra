@@ -4,3 +4,4 @@ channels:
   - nodefaults
 dependencies:
   - xarray
+  - bs4
