@@ -1,0 +1,6 @@
+name: pykostra
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - xarray
