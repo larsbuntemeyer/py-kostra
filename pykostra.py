@@ -67,10 +67,10 @@ def derive_varname(varname):
     return "HN"
 
 
-def interval_coord(ds, numeric=True):
-    interval = xr.DataArray([i[-4:] for i in list(ds.data_vars)], dims=interval_name)
-    if numeric is True:
-        interval[:] = [int(i[:-1]) for i in interval.values]
+def interval_coord(ds):
+    interval = xr.DataArray(
+        [int(i[-4:-1]) for i in list(ds.data_vars)], dims=interval_name
+    )
     interval.attrs["units"] = "years"
     return interval
 
