@@ -13,6 +13,13 @@ To see how it works, just click the binder button!
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/larsbuntemeyer/py-kostra/master?urlpath=lab%2Ftree%2Fkostra-to-xarray.ipynb)
 
+## Create a NetCDF file
+
+If you are not interested in `xarray`, you can still simply create a NetCDF file using the `create-netcdf.py` script. Simply run:
+
+```bash
+python create-netcdf.py
+```
 
 ## Requirements
 
