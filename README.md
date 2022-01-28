@@ -9,9 +9,12 @@ This repository contains the python module `pykostra` which let's you easily con
 It is supposed to create an analysis ready dataset for easy exploration of the KOSTRA dataset. 
 For further scientific information, please consult the official documentation.
 
-To see how it works, just click the binder button!
+To see how it works, just click the binder button and create the plot yourself!
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/larsbuntemeyer/py-kostra/master?urlpath=lab%2Ftree%2Fkostra-to-xarray.ipynb)
+
+![image](hn.png)
+
 
 ## Create a NetCDF file
 
