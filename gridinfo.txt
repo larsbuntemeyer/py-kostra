@@ -1,0 +1,72 @@
+# Geographische Koordinaten der Rasterfelder von KOSTRA-DWD.                                                      
+#                             
+# Spalte  Spaltenname     Inhalt                                  
+# A       index_rc        Index (Zeile * 1000 + Spalte)                                   
+# B       Col     Spalte (von "West" nach "Ost")                                  
+# C       Row     Zeile (von "Nord" nach "süd")                                   
+# D       Col_Row [Spalte] - [Zeile]                                      
+# E       X_CENT_GEO      Rastermittelpunkt               östliche geographische Länge in Dezimalgrad                     
+# F       Y_CENT_GEO      Rastermittelpunkt               nördliche geographische Breite in Dezimalgrad                   
+# G       X1_NW_GEO       1. Eckpunkt             östliche geographische Länge in Dezimalgrad                     
+# H       Y1_NW_GEO       1. Eckpunkt             nördliche geographische Breite in Dezimalgrad                   
+# I       X2_SW_GEO       2. Eckpunkt             östliche geographische Länge in Dezimalgrad                     
+# J       Y2_SW_GEO       2. Eckpunkt             nördliche geographische Breite in Dezimalgrad                   
+# K       X3_SE_GEO       3. Eckpunkt             östliche geographische Länge in Dezimalgrad                     
+# L       Y3_SE_GEO       3. Eckpunkt             nördliche geographische Breite in Dezimalgrad                   
+# M       X4_NE_GEO       4. Eckpunkt             östliche geographische Länge in Dezimalgrad                     
+# N       Y4_NE_GEO       4. Eckpunkt             nördliche geographische Breite in Dezimalgrad                   
+#                             
+#                             
+#                             
+# Weitere Informationen                                                   
+#                             
+# Koordinatensystem/Projektion: ETRS89-LCC                                                        
+# Lambert Conformal Conic Projektion                                                      
+# EPSG-Code: 3034                                                 
+#                             
+#                             
+# Quellkoordinatensystem:                                                 
+# benutzerdefiniertes Koordinatensystem                                                   
+# Lambert Conformal Conic Projektion                                                      
+# 0035,0000000 Breitengrad 1. Standard-Paral. [Grad]                                                      
+# 0065,0000000 Breitengrad 2. Standard-Paral. [Grad]                                                      
+# 0010,0000000 Längengrad des Gitterursprungs [Grad]                                                      
+# 0052,0000000 Breitengrad des Gitterursprungs [Grad]                                                     
+# 004000000,00 Östliche Verschiebung [Meter]                                                      
+# 002800000,00 Nördliche Verschiebung [Meter]                                                     
+#                             
+# Bereichsgrenzen des Koordinatensystems:                                                 
+# Länge -10 bis 30 Grad                                                   
+# Breite -89 bis 89 Grad                                                  
+#                             
+# Ellipsoid des QuellSystems:                                                     
+# GRS80 (1980)                                                    
+# 6378137,0000 Große Halbachse [Meter]                                                    
+# 6356752,3141 Kleine Halbachse [Meter]                                                   
+#                             
+#                             
+# Zielkoordinatensystem:                                                  
+# Geographische Koordinaten (Greenwich) [Grad]                                                    
+# Geographische Projektion                                                        
+# 000000000360 Längeneinheiten                                                    
+# 000000000090 Breiteneinheiten                                                   
+# 0000,0000000 [Grad] relativ zu Greenwich                                                        
+#                             
+# Bereichsgrenzen des Koordinatensystems:                                                 
+# Länge -180 bis 180 Grad                                                 
+# Breite -90 bis 90 Grad                                                  
+#                             
+# Ellipsoid des ZielSystems:                                                      
+# GRS80 (1980)                                                    
+# 6378137,0000 Große Halbachse [Meter]                                                    
+# 6356752,3141 Kleine Halbachse [Meter]                                                   
+#                             
+#                             
+# Geodätische Bezugssysteme:                                                      
+# ETRS89 (Europa), geozentrisch, GRS80                                                    
+# nach                                                    
+# ETRS89 (Europa), geozentrisch, GRS80                                                    
+#                             
+#                             
+# Transformation:                                                 
+# Kein geodätischer Datumsübergang erforderlich                                                   
