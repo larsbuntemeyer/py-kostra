@@ -50,6 +50,15 @@ def create_table(f):
     return df
 
 
+def add_coord_attrs(ds):
+    ds = ds.copy()
+    ds["lon"].attrs["long_name"] = "longitude"
+    ds["lon"].attrs["units"] = "degrees_east"
+    ds["lat"].attrs["long_name"] = "latitude"
+    ds["lat"].attrs["units"] = "degrees_north"
+    return ds
+
+
 def to_xarray(df):
     ds = df.set_index([duration_name, "y", "x"]).to_xarray()  # convert to gridded data
     ds = ds.where(ds != -99.9)  # set nans
@@ -58,6 +67,7 @@ def to_xarray(df):
     )  # .drop(('x', 'y'))
     ds[duration_name] = [int(i[1:]) for i in ds[duration_name].values]
     ds[duration_name].attrs["units"] = "minutes"
+    ds = add_coord_attrs(ds)
     return ds
 
 
@@ -119,4 +129,14 @@ def kostra_to_dataset(csv_files=None, path="raw"):
     tables = [create_table(f) for f in csv_files]
     dsets = [to_xarray(df) for df in tables]
     dsets = [add_coords(ds) for ds in dsets]
-    return combine(dsets)
+    return encode(combine(dsets))
+
+
+def encode(ds):
+    """encode meta data for netcdf"""
+    for var in ds.data_vars.values():
+        var.encoding["_FillValue"] = 1.0e20
+        var.encoding["coordinates"] = "lon lat"
+    for coord in ds.coords.values():
+        coord.encoding["_FillValue"] = None
+    return ds
