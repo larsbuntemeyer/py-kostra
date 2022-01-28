@@ -18,14 +18,13 @@ def get_raw(dir="raw"):
         file = l["href"]
         r = requests.get(os.path.join(url, file))
         try:
-            open(os.path.join(dir,l["href"]), 'wb').write(r.content)
-            print('download: ', os.path.join(url, file))
+            open(os.path.join(dir, l["href"]), "wb").write(r.content)
+            print("download: ", os.path.join(url, file))
         except:
-            print('passing: ', os.path.join(url, file))
-
+            print("passing: ", os.path.join(url, file))
 
 
 if __name__ == "__main__":
     get_raw()
 
-#read_url("https://opendata.dwd.de/climate_environment/CDC/grids_germany/return_periods/precipitation/KOSTRA/KOSTRA_DWD_2010R/asc/")
+# read_url("https://opendata.dwd.de/climate_environment/CDC/grids_germany/return_periods/precipitation/KOSTRA/KOSTRA_DWD_2010R/asc/")
