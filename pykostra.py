@@ -19,8 +19,10 @@ lat = "lat"
 x = "x"
 y = "y"
 
-xb_points = ['X2_SW_GEO', 'X3_SE_GEO', 'X4_NE_GEO', 'X1_NW_GEO']
-yb_points = ['Y2_SW_GEO', 'Y3_SE_GEO', 'Y4_NE_GEO', 'Y1_NW_GEO']
+data_vars = ["HN", "HN_KOG"]
+
+xb_points = ["X2_SW_GEO", "X3_SE_GEO", "X4_NE_GEO", "X1_NW_GEO"]
+yb_points = ["Y2_SW_GEO", "Y3_SE_GEO", "Y4_NE_GEO", "Y1_NW_GEO"]
 
 
 def get_geoinfo():
@@ -28,6 +30,7 @@ def get_geoinfo():
         "./raw/KOSTRA-DWD-2010R_geog_Bezug.xlsx",
         sheet_name="Raster_geog_Bezug",
         index_col="index_rc",
+        engine="openpyxl",
     )
 
 
@@ -57,19 +60,15 @@ def create_table(f, geoinfo):
     df = pd.read_csv(f, delimiter=";", index_col="INDEX_RC")
     df[duration_name] = parse_duration_level(f)
     df = df.join(geoinfo[["X_CENT_GEO", "Y_CENT_GEO", "Col", "Row"]])
-    df = df.rename(
-        columns={"Col": x, "Row": y, "X_CENT_GEO": lon, "Y_CENT_GEO": lat}
-    )
+    df = df.rename(columns={"Col": x, "Row": y, "X_CENT_GEO": lon, "Y_CENT_GEO": lat})
     return df
 
 
 def add_bounds(ds, geoinfo):
     ds = ds.copy()
     bounds_cols = xb_points + yb_points
-    df = geoinfo[["X_CENT_GEO", "Y_CENT_GEO", "Col", "Row"]+bounds_cols]
-    df = df.rename(
-        columns={"Col": x, "Row": y, "X_CENT_GEO": lon, "Y_CENT_GEO": lat}
-    )
+    df = geoinfo[["X_CENT_GEO", "Y_CENT_GEO", "Col", "Row"] + bounds_cols]
+    df = df.rename(columns={"Col": x, "Row": y, "X_CENT_GEO": lon, "Y_CENT_GEO": lat})
     bnds = df.set_index([y, x]).to_xarray()
     v_lon = xr.concat([bnds[p].squeeze(drop=True) for p in xb_points], dim=vertices_dim)
     v_lat = xr.concat([bnds[p].squeeze(drop=True) for p in yb_points], dim=vertices_dim)
@@ -77,8 +76,8 @@ def add_bounds(ds, geoinfo):
     v_lat.name = lat_vertices
     v_lon.attrs["units"] = "degrees_east"
     v_lat.attrs["units"] = "degrees_north"
-    ds[lon].attrs['bounds'] = lon_vertices
-    ds[lat].attrs['bounds'] = lat_vertices
+    ds[lon].attrs["bounds"] = lon_vertices
+    ds[lat].attrs["bounds"] = lat_vertices
     ds[lon_vertices] = v_lon
     ds[lat_vertices] = v_lat
     return ds
@@ -131,7 +130,9 @@ def merge_variables(ds):
     ds = ds.copy()
     data_vars = [v for v in ds.data_vars if derive_varname(v) is not None]
     varname = derive_varname(data_vars[0])
-    ds[varname] = xr.concat([ds[var] for var in data_vars], dim=interval_coord(data_vars))
+    ds[varname] = xr.concat(
+        [ds[var] for var in data_vars], dim=interval_coord(data_vars)
+    )
     ds = ds.drop_vars(data_vars)
     ds[varname].attrs = {"long_name": "Bemessungsniederschlagswert", "units": "mm"}
     return ds.transpose(duration_name, interval_name, y, x)
@@ -161,6 +162,7 @@ def get_csv_files(raw_dir="./raw", unzip_dir="./unzip"):
 
 
 def kostra_to_dataset(csv_files=None, path="raw", bounds=True, encode=True):
+    """main function to convert kostra csf files to xarray dataset."""
     geoinfo = get_geoinfo()
     if csv_files is None:
         csv_files = get_csv_files(path)
@@ -170,16 +172,16 @@ def kostra_to_dataset(csv_files=None, path="raw", bounds=True, encode=True):
     ds = combine(dsets)
     if bounds is True:
         ds = add_bounds(ds, geoinfo)
-    if nc_encode is True:
+    if encode is True:
         return nc_encode(ds)
     return ds
 
 
 def nc_encode(ds):
     """encode meta data for netcdf"""
-    for var in ds.data_vars.values():
-        var.encoding["_FillValue"] = 1.0e20
-        var.encoding["coordinates"] = "{} {}".format(lon, lat)
+    for var in data_vars:
+        ds[var].encoding["_FillValue"] = 1.0e20
+        # ds[var].encoding["coordinates"] = "{} {}".format(lon, lat)
     for coord in ds.coords.values():
         coord.encoding["_FillValue"] = None
     for coord in [lon_vertices, lat_vertices]:
