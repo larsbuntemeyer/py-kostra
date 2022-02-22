@@ -41,9 +41,12 @@ def create_table(f):
     and grid info from geoinfo table.
 
     """
+    bounds_cols = ['X1_NW_GEO', 'Y1_NW_GEO', 'X2_SW_GEO', 'Y2_SW_GEO', 
+                   'X3_SE_GEO', 'Y3_SE_GEO', 'X4_NE_GEO', 'Y4_NE_GEO']
     df = pd.read_csv(f, delimiter=";", index_col="INDEX_RC")
     df[duration_name] = parse_duration_level(f)
     df = df.join(geoinfo[["X_CENT_GEO", "Y_CENT_GEO", "Col", "Row"]])
+    df = df.join(geoinfo[bounds_cols])
     df = df.rename(
         columns={"Col": "x", "Row": "y", "X_CENT_GEO": "lon", "Y_CENT_GEO": "lat"}
     )
@@ -74,12 +77,15 @@ def to_xarray(df):
 def derive_varname(varname):
     if "KOG" in varname:
         return "HN_KOG"
-    return "HN"
+    elif "HN" in varname:
+        return "HN"
+    else:
+        return None
 
 
-def interval_coord(ds):
+def interval_coord(data_vars):
     interval = xr.DataArray(
-        [int(i[-4:-1]) for i in list(ds.data_vars)], dims=interval_name
+        [int(i[-4:-1]) for i in list(data_vars)], dims=interval_name
     )
     interval.attrs["units"] = "years"
     return interval
@@ -92,9 +98,9 @@ def duration_level(ds, numeric=True):
 def add_coords(ds):
     """merge intervals into coordinate"""
     ds = ds.copy()
-    data_vars = list(ds.data_vars)
+    data_vars = [v for v in ds.data_vars if derive_varname(v) is not None]
     varname = derive_varname(data_vars[0])
-    ds[varname] = xr.concat([ds[var] for var in ds.data_vars], dim=interval_coord(ds))
+    ds[varname] = xr.concat([ds[var] for var in data_vars], dim=interval_coord(data_vars))
     ds = ds.drop_vars(data_vars)
     ds[varname].attrs = {"long_name": "Bemessungsniederschlagswert", "units": "mm"}
     return ds.transpose(duration_name, interval_name, "y", "x")
