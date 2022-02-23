@@ -6,7 +6,7 @@ import pandas as pd
 import xarray as xr
 
 
-__version__ = "0.3.0"
+__version__ = "0.3.0+dev"
 
 
 duration_name = "duration"
